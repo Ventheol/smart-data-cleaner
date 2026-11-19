@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+
+# Large raw datasets
+examples/raw/adult/
+examples/raw/online_retail/
+
+# Large generated benchmark outputs
+examples/cleaned/adult/
+
+# Temporary packaging test outputs
+examples/cleaned/titanic/packaging_test.csv
+examples/cleaned/titanic/packaging_test_report.json
+
+# Python package build metadata
+*.egg-info/
+build/
+dist/

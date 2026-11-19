@@ -1,0 +1,33 @@
+{
+    "original_rows": 891,
+    "original_columns": 12,
+    "final_rows": 891,
+    "final_columns": 12,
+    "empty_rows_removed": 0,
+    "empty_columns_removed": 0,
+    "duplicate_rows_removed": 0,
+    "whitespace_cells_trimmed": 2,
+    "total_missing_values": 866,
+    "missing_values_per_column": {
+        "PassengerId": 0,
+        "Survived": 0,
+        "Pclass": 0,
+        "Name": 0,
+        "Sex": 0,
+        "Age": 177,
+        "SibSp": 0,
+        "Parch": 0,
+        "Ticket": 0,
+        "Fare": 0,
+        "Cabin": 687,
+        "Embarked": 2
+    },
+    "missing_strategy": "fill",
+    "missing_rows_removed": 0,
+    "missing_values_filled": 179,
+    "applied_fill_methods": {
+        "Age": "median",
+        "Embarked": "mode"
+    },
+    "remaining_missing_values": 687
+}

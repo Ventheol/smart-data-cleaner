@@ -1,0 +1,21 @@
+{
+    "original_rows": 5,
+    "original_columns": 3,
+    "final_rows": 3,
+    "final_columns": 3,
+    "empty_rows_removed": 0,
+    "empty_columns_removed": 0,
+    "duplicate_rows_removed": 2,
+    "whitespace_cells_trimmed": 0,
+    "total_missing_values": 0,
+    "missing_values_per_column": {
+        "Name": 0,
+        "Age": 0,
+        "City": 0
+    },
+    "missing_strategy": "preserve",
+    "missing_rows_removed": 0,
+    "missing_values_filled": 0,
+    "applied_fill_methods": {},
+    "remaining_missing_values": 0
+}
