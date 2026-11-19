@@ -2,7 +2,7 @@
 
 [English](README.md) | **فارسی**
 
-ابزاری مبتنی بر پایتون و کتابخانه Pandas برای پاک‌سازی خودکار فایل‌های CSV و Excel.
+ابزاری مبتنی بر Python و کتابخانه Pandas برای پاک‌سازی خودکار فایل‌های CSV و Excel.
 
 این پروژه عملیات متداول آماده‌سازی داده را خودکار می‌کند؛ از جمله مدیریت مقادیر گمشده، حذف ردیف‌های تکراری، اصلاح فاصله‌های اضافی و تولید گزارش آماری در قالب JSON.
 
@@ -34,8 +34,10 @@ smart-data-cleaner/
 │       ├── pipeline.py
 │       └── reporter.py
 ├── tests/
+├── pyproject.toml
 ├── requirements.txt
-└── README.md
+├── README.md
+└── README_FA.md
 ```
 
 ## پیش‌نیازها
@@ -49,7 +51,7 @@ smart-data-cleaner/
 ابتدا مخزن را دریافت کنید:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/Ventheol/smart-data-cleaner.git
 cd smart-data-cleaner
 ```
 
@@ -65,38 +67,32 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-نصب وابستگی‌ها:
+نصب پروژه و وابستگی‌های اصلی:
 
 ```bash
-python -m pip install -r requirements.txt
+python -m pip install -e .
 ```
 
-برای دسترسی پایتون به کدهای پروژه، متغیر محیطی زیر را تنظیم کنید.
-
-Windows PowerShell:
-
-```powershell
-$env:PYTHONPATH = "$PWD\src"
-```
-
-Linux / macOS:
+برای نصب ابزارهای توسعه و تست نیز از دستور زیر استفاده کنید:
 
 ```bash
-export PYTHONPATH="$PWD/src"
+python -m pip install -e ".[dev]"
 ```
 
 ## نحوه استفاده
 
+پس از نصب، می‌توانید ابزار را مستقیماً از طریق دستور `smart-data-cleaner` اجرا کنید.
+
 ساختار کلی دستور:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv
+smart-data-cleaner input.csv output.csv
 ```
 
-برای فایل‌های Excel نیز می‌توانید از همین دستور استفاده کنید:
+برای فایل‌های Excel نیز از همین دستور استفاده کنید:
 
 ```bash
-python -m smart_data_cleaner.cli input.xlsx output.xlsx
+smart-data-cleaner input.xlsx output.xlsx
 ```
 
 ### مدیریت مقادیر گمشده
@@ -108,27 +104,27 @@ python -m smart_data_cleaner.cli input.xlsx output.xlsx
 به‌صورت پیش‌فرض، مقادیر گمشده در ردیف‌ها و ستون‌های دارای داده حفظ می‌شوند.
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv
+smart-data-cleaner input.csv output.csv
 ```
 
 **۲. حذف ردیف‌های دارای مقدار گمشده (Drop)**
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy drop
+smart-data-cleaner input.csv output.csv --missing-strategy drop
 ```
 
 **۳. جایگزینی مقادیر گمشده (Fill)**
 
-استفاده از یک روش برای تمام ستون‌ها:
+استفاده از یک روش برای تمام ستون‌های قابل پردازش:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy fill --fill-method mode
+smart-data-cleaner input.csv output.csv --missing-strategy fill --fill-method mode
 ```
 
 انتخاب روش متفاوت برای ستون‌های مشخص:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
+smart-data-cleaner input.csv output.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
 ```
 
 روش‌های قابل استفاده:
@@ -146,13 +142,13 @@ python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy fill --
 برای حذف ردیف‌های تکراری از گزینه زیر استفاده کنید:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --drop-duplicates
+smart-data-cleaner input.csv output.csv --drop-duplicates
 ```
 
 امکان ترکیب گزینه‌ها نیز وجود دارد:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy drop --drop-duplicates
+smart-data-cleaner input.csv output.csv --missing-strategy drop --drop-duplicates
 ```
 
 ## گزارش عملیات پاک‌سازی
@@ -182,10 +178,10 @@ output/
 
 پروژه شامل نمونه‌ای از مجموعه‌داده Titanic است.
 
-در مثال زیر، مقادیر گمشده ستون Age با میانه و مقادیر گمشده ستون Embarked با نما جایگزین می‌شوند:
+در مثال زیر، مقادیر گمشده ستون `Age` با میانه و مقادیر گمشده ستون `Embarked` با نما جایگزین می‌شوند:
 
 ```bash
-python -m smart_data_cleaner.cli examples/raw/titanic/train.csv examples/cleaned/titanic/train_cleaned.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
+smart-data-cleaner examples/raw/titanic/train.csv examples/cleaned/titanic/train_cleaned.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
 ```
 
 نتایج ثبت‌شده:
@@ -233,7 +229,9 @@ python -m pytest -v
 python -m pytest --cov=smart_data_cleaner --cov-report=term-missing
 ```
 
-در نسخه فعلی، مجموعه تست توسعه شامل ۴۷ تست موفق و پوشش کد ۹۶ درصدی است.
+در آخرین اجرای ثبت‌شده، مجموعه تست پروژه شامل **۵۰ تست موفق** بوده است.
+
+پوشش کد ۹۶ درصدی نیز در اجرای قبلی محیط توسعه به دست آمده است.
 
 ## محدودیت‌ها
 
@@ -248,4 +246,4 @@ python -m pytest --cov=smart_data_cleaner --cov-report=term-missing
 
 ---
 
-**Smart Data Cleaner** پروژه‌ای با تمرکز بر توسعه کاربردی پایتون، پردازش داده، طراحی ابزارهای خط فرمان و تست نرم‌افزار است.
+**Smart Data Cleaner** پروژه‌ای با تمرکز بر توسعه کاربردی Python، پردازش داده، طراحی ابزارهای خط فرمان و تست نرم‌افزار است.

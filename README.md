@@ -28,14 +28,18 @@ smart-data-cleaner/
 │   └── benchmark_adult.py
 ├── src/
 │   └── smart_data_cleaner/
+│       ├── __init__.py
 │       ├── cleaner.py
 │       ├── cli.py
 │       ├── file_handler.py
 │       ├── pipeline.py
 │       └── reporter.py
 ├── tests/
+├── pyproject.toml
 ├── requirements.txt
-└── README.md
+├── requirements-dev.txt
+├── README.md
+└── README_FA.md
 ```
 
 ## Requirements
@@ -49,7 +53,7 @@ smart-data-cleaner/
 Clone the repository:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/Ventheol/smart-data-cleaner.git
 cd smart-data-cleaner
 ```
 
@@ -65,38 +69,44 @@ Activate it on Windows PowerShell:
 .venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+On Linux / macOS:
 
 ```bash
-python -m pip install -r requirements.txt
+source .venv/bin/activate
 ```
 
-Make the source package available to Python.
-
-Windows PowerShell:
-
-```powershell
-$env:PYTHONPATH = "$PWD\src"
-```
-
-Linux / macOS:
+Install the project in editable mode:
 
 ```bash
-export PYTHONPATH="$PWD/src"
+python -m pip install -e .
+```
+
+To install development dependencies for running tests:
+
+```bash
+python -m pip install -e ".[dev]"
 ```
 
 ## Usage
 
-The command-line interface accepts an input file and an output file:
+After installation, the command-line tool is available as `smart-data-cleaner`.
+
+Basic usage:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv
+smart-data-cleaner input.csv output.csv
 ```
 
 The same command works with Excel files:
 
 ```bash
-python -m smart_data_cleaner.cli input.xlsx output.xlsx
+smart-data-cleaner input.xlsx output.xlsx
+```
+
+You can also run the CLI as a Python module:
+
+```bash
+python -m smart_data_cleaner.cli input.csv output.csv
 ```
 
 ### Handling Missing Values
@@ -108,7 +118,7 @@ Smart Data Cleaner supports three missing-value strategies.
 Keep missing values in partially populated rows and columns.
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv
+smart-data-cleaner input.csv output.csv
 ```
 
 **2. Drop**
@@ -116,7 +126,7 @@ python -m smart_data_cleaner.cli input.csv output.csv
 Remove rows containing missing values.
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy drop
+smart-data-cleaner input.csv output.csv --missing-strategy drop
 ```
 
 **3. Fill**
@@ -126,13 +136,13 @@ Fill missing values using a selected statistical method.
 Apply one method to all columns:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy fill --fill-method mode
+smart-data-cleaner input.csv output.csv --missing-strategy fill --fill-method mode
 ```
 
 Apply different methods to specific columns:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
+smart-data-cleaner input.csv output.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
 ```
 
 Available fill methods:
@@ -150,13 +160,13 @@ Mean and median require numeric columns. The selected method must be compatible 
 Use `--drop-duplicates` to remove duplicate rows:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --drop-duplicates
+smart-data-cleaner input.csv output.csv --drop-duplicates
 ```
 
 Options can be combined:
 
 ```bash
-python -m smart_data_cleaner.cli input.csv output.csv --missing-strategy drop --drop-duplicates
+smart-data-cleaner input.csv output.csv --missing-strategy drop --drop-duplicates
 ```
 
 ## Cleaning Reports
@@ -190,7 +200,7 @@ The project includes a Titanic dataset example.
 Fill missing ages using the median and missing embarkation ports using the mode:
 
 ```bash
-python -m smart_data_cleaner.cli examples/raw/titanic/train.csv examples/cleaned/titanic/train_cleaned.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
+smart-data-cleaner examples/raw/titanic/train.csv examples/cleaned/titanic/train_cleaned.csv --missing-strategy fill --fill-column Age=median --fill-column Embarked=mode
 ```
 
 Observed results:
@@ -226,7 +236,13 @@ These results demonstrate the tool's behavior on larger real-world tabular datas
 
 ## Running Tests
 
-Install the development dependencies from `requirements.txt`, then run:
+Install the development dependencies:
+
+```bash
+python -m pip install -e ".[dev]"
+```
+
+Run the test suite:
 
 ```bash
 python -m pytest -v
@@ -238,7 +254,7 @@ Run tests with coverage:
 python -m pytest --cov=smart_data_cleaner --cov-report=term-missing
 ```
 
-The current development test suite contains 47 passing tests and has achieved 96% code coverage.
+The current development test suite contains **50 passing tests**. The project previously achieved **96% code coverage** in the local development environment.
 
 ## Limitations
 
